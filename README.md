@@ -1,3 +1,5 @@
+Repo for all academic programs of R-software<br>
+Unit-II Numerical Algorithms<br>
 # Finding-MLE-Using-Grid-Search-Method
 This repository contains R-code for finding the maximum likelihood estimator for the standard distributions.<br>
 Direct Search Method <br> 
