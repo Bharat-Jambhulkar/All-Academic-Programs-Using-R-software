@@ -1,10 +1,3 @@
-# Repo for all academic programs of R-software<br>
-Unit-II Numerical Algorithms<br>
-Finding-MLE-Using-Grid-Search-Method
-This repository contains R-code for finding the maximum likelihood estimator for the standard distributions.<br>
-Direct Search Method <br> 
-Subtopic: Grid Search Method and Using it to Find Maximum Likelihood Estimator <br>
-
 #que1: Find MLE in case of Bernoulli distribution <br>
 n = 1000 <br>
 p = 0.6<br>
