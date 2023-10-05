@@ -1,0 +1,14 @@
+# Mle estimation using Newton Raphson Method <br>
+Sample program to find root of 10
+func = function(x){
+  return(x-((x^2-10)/(2*x))) # function to find using newton raphson
+}
+x0 = 10 #random initiation
+eps = 10^-4 
+err = 1
+while(err>=eps){
+  x1 = func(x0)
+  err = abs(x1-x0)
+  x0=x1
+  print(x0)
+}
