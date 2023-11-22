@@ -1,3 +1,4 @@
+#Computation of Confidence Coefficient for Normal Disreibution
 mseq = seq(50,5000, by= 50)
 ccoeeficient = c()
 mu = (2340-2300)/10
@@ -21,3 +22,106 @@ for(j in 1:length(mseq)){
 }
 plot(mseq,ccoeeficient,type = 'l',col = 2)
 
+#R code for Level of Significance and Empirical power
+#A)Consider the binomial Distribution 
+#Computation of level of significance 
+p = 0.5
+n=8
+m=200
+s=c()
+count = 0
+for(i in 1:200){
+  s=sum(rbinom(n,1,p))
+  if(s<=2){
+    count = count+1
+  }
+}
+alpha = count/m
+alpha
+#computation of power
+p = 0.1
+n=8
+m=200
+s=c()
+count = 0
+for(i in 1:200){
+  s=sum(rbinom(n,1,p))
+  if(s<=2){
+    count = count+1
+  }
+}
+power = count/m
+power
+
+#A)Consider the Poisson Distribution
+#Computation of los
+l=0.5
+n=8
+m=200
+s=c()
+count = 0
+for(i in 1:m){
+  s = sum(rpois(n,l))
+  if(s>=8){
+    count = count+1
+  }
+}
+alpha = count/m
+alpha
+
+#Computation of Power
+l=2
+n=8
+m=200
+s=c()
+count = 0
+for(i in 1:m){
+  s = sum(rpois(n,l))
+  if(s>=8){
+    count = count+1
+  }
+}
+power = count/m
+power
+
+#checking the effect of simulation
+#Poisson ditribution
+mseq = seq(50,5000,by=50)
+ccoeeficient = c()
+l=2
+n=8
+for(j in 1:length(mseq)){
+  m = mseq[j]
+  count = 0
+  for(i in 1:m){
+    s = sum(rpois(n,l))
+    if(s>=8){
+      count = count+1
+    }
+  }
+  ccoeeficient[j]=count/m
+}
+plot(mseq,ccoeeficient,type = 'l',col=2)
+
+
+
+#checking the effect of simulation
+#Bernoulli ditribution 
+#Program for Level of Significance 
+mseq=seq(50,5000,by=50)
+ccoeeficient= c()
+n=8
+p=0.5
+count = 0
+for(j in 1:length(mseq)){
+  m = mseq[j]
+  count = 0
+  for(i in 1:m){
+    x = rbinom(n,1,p)
+    if(sum(x)<=2){
+      count = count+1
+    }
+  }
+  ccoeeficient[j]=count/m
+}
+plot(mseq,ccoeeficient,type = 'l', col = 2)
