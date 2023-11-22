@@ -1,1 +1,23 @@
+mseq = seq(50,5000, by= 50)
+ccoeeficient = c()
+mu = (2340-2300)/10
+sigma = 2
+n = 50
+L=c()
+U=c()
+
+for(j in 1:length(mseq)){
+  m = mseq[j]
+  count = 0
+  for(i in 1:m){
+    x = rnorm(n,mu,sqrt(sigma))
+    L[i] = mean(x) - qnorm(0.975)*(sqrt(sigma)/sqrt(n))
+    U[i] = mean(x) + qnorm(0.975)*(sqrt(sigma)/sqrt(n))
+    if(((U[i]-mu)*(mu-L[i]))>0){
+      count = count + 1
+    }
+    ccoeeficient[j] = count/m
+  }
+}
+plot(mseq,ccoeeficient,type = 'l',col = 2)
 
