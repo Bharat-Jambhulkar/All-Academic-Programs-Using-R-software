@@ -1,0 +1,15 @@
+#Secant Method for finding roots
+f = function(x){
+	return(x^2-(5*x)+6) #writing the function 
+}
+x0 = 3 #random initiator
+x1 = 5 #random initiator
+err = 1 #initiationg error to run the loop
+ep = 10^-4 #value of epsilon for breaking the loop
+while(err>=ep){
+	x2 = x0 - (f(x0)*(x1-x0)/(f(x1)-f(x0))) #Secant Method Formula 
+	x0 = x1
+	err = abs(x2-x1)
+	x1 = x2
+	}
+print(x1)
