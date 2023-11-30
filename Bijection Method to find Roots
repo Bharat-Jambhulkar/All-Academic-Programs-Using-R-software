@@ -1,0 +1,29 @@
+#Bijection Method to find the roots 
+f = function(x){
+	(x^2)-5*x+6
+}
+x=c()
+x[1] = 2
+x[2] = 3.99
+a = x[1]
+b = x[2]
+err = 1
+ep = 10^-7
+i = 2
+while(err>ep)
+{
+ fa = f(a)
+ fb = f(b)
+ c = (a+b)/2
+ x[i+1] = c
+ fc = f(c)
+ if(fa*fc<0)
+	{
+	b = c
+	}else{
+	a = c
+	}
+	err = abs(fc)
+	i = i+1
+}
+x
