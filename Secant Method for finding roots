@@ -2,14 +2,15 @@
 f = function(x){
 	return(x^2-(5*x)+6) #writing the function 
 }
-x0 = 3 #random initiator
-x1 = 5 #random initiator
+x = c()
+x[1] = 1 #random initiator
+x[2] = 5 #random initiator
+i = 2
 err = 1 #initiationg error to run the loop
 ep = 10^-4 #value of epsilon for breaking the loop
 while(err>=ep){
-	x2 = x0 - (f(x0)*(x1-x0)/(f(x1)-f(x0))) #Secant Method Formula 
-	x0 = x1
-	err = abs(x2-x1)
-	x1 = x2
+	x[i+1] = x[i] - (f(x[i])*(x[i]-x[i-1])/(f(x[i])-f(x[i-1]))) #Secant Method Formula
+	err = abs(x[i+1]-x[i])
+	i = i+1
 	}
-print(x1)
+x
