@@ -1,0 +1,15 @@
+#Gradient Decent Method
+f2 = function(x){
+	return(2*x-6) #original eq x^2-6*x+5 and taking derivative of it.
+}
+x = c() #declaring empty vector to see the convergence of roots
+err = 1 #random value of error to run the loop
+i = 1	   
+ep = 10^-7 #value of epsilon for a neighborhood of root
+x[1] = 8.6  # random initiator
+while(err>=ep){
+    x[i+1] = x[i] - 0.3*f2(x[i]) #gradient decent formula with rate of convergence alpha = 0.3
+    err = abs(x[i+1]-x[i])
+    i = i + 1
+} 
+x #printing vector x
