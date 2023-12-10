@@ -1,0 +1,9 @@
+#Plot of Chisquare 
+x = rchisq(50,10)
+hist(x,probability = TRUE,main = "Chisquare Distribution")
+lines(density(x),col=2)
+
+#Normal Distribution 
+x = rnorm(200)
+hist(x, probability = TRUE, main = "Normal Distribution")
+lines(density(x),col=3)
