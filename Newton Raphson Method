@@ -12,3 +12,23 @@ while(err>=eps){
   x0=x1
   print(x0)
 }
+
+#Finding mle by Newton Raphson Method 
+#Exponential Distribution 
+
+f = function(x){
+  return(x-((n/x) - sumx)/(-n/x^2))
+}
+n=200
+x=rexp(n,rate = 3)
+sumx = sum(x)
+theta = c()
+theta[1] = 2
+i = 1
+err=1
+while(err>=0.0001){
+  theta[i+1] = f(theta[i])
+  err = abs(theta[i+1]-theta[i])
+  i = i+1
+}
+theta
