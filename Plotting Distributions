@@ -7,3 +7,7 @@ lines(density(x),col=2)
 x = rnorm(200)
 hist(x, probability = TRUE, main = "Normal Distribution")
 lines(density(x),col=3)
+
+x=rchisq(200,5)
+hist(x,freq = FALSE)
+curve(dchisq(x,5),add = TRUE,col=3)
