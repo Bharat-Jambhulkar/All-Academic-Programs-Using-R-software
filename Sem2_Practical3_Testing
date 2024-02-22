@@ -1,0 +1,49 @@
+d = read.table("CigaretteConsumption.txt",header = TRUE)
+View(d)
+y = d$Sales
+x1 = d$Age
+x2 = d$HS
+x3 = d$Income
+x4 = d$Black
+x5 = d$Female
+x6 = d$Price
+
+reg = lm(y~(x1+x2+x3+x4+x5+x6),data = d)
+summary(reg)
+plot(reg$fitted.values,reg$residuals)
+anova(reg)
+n = 51
+k = 6
+c = c(rep(1,51))
+X = cbind(c,x1,x2,x3,x4,x5,x6)
+View(X)
+beta_hat = reg$coefficients
+SSres = t(y)%*%y-beta_hat%*%t(X)%*%y
+MSres = SSres/(n-k-1)
+C = solve(t(X)%*%X)
+t0 = beta_hat[6]/sqrt(MSres*C[6,6])
+abs(t0) #to cross check the value see summary(reg) output 
+qt(1-0.025,n-k-1) # here abs(t0) < t(alpha/2,n-k-1) hence we failed to reject H0.
+#variable female may not be needed in above regression equation.
+
+
+#-----regression removing Income
+reg1 = lm(y~(x1+x2+x4+x5+x6),data = d)
+a = summary(reg1) #Observe the output. R2 of full model and R2 of reduced model. calculate their diff. 
+a$r.squared
+b = summary(reg)
+b$r.squared
+b$r.squared-a$r.squared 
+
+#--------regression removing Income, age, price
+reg2 = lm(y~(x2+x4+x5),data = d)
+c = summary(reg2)
+c$r.squared
+b$r.squared-c$r.squared #28.47% is explained by this 3 variables
+
+
+#---------regression when sales is regressed only on income
+
+reg3 = lm(y~x3,data=d)
+d = summary(reg3)
+d$r.squared #10% variation is explained by income
