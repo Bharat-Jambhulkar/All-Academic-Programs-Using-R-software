@@ -1,0 +1,77 @@
+#Only question number 1
+library(readxl)
+DT = read_excel("Delivery time data.xls")
+View(DT)
+delivery_time = DT$`Delivery Time (Min.)`
+number_cases = DT$`Number of Cases`
+distance = DT$`Distance (ft.)`
+reg = lm(delivery_time~(number_cases+distance))
+summary(reg)
+res = reg$residuals
+fit_value = reg$fitted.values
+plot(fit_value,res)
+MSres = sum(res^2)/(length(delivery_time)-3)
+d = res/sqrt(MSres)
+plot(abs(d))
+for(i in 1:length(d)){
+  if(abs(d[i])>2){
+    
+    print(d[i])
+  }
+  
+}
+
+for(i in 1:length(fit_value)){
+  if(abs(res[i])>6){
+    
+    print(res[i])
+  }
+  
+}
+c = c(rep(1,25))
+X = cbind(c,as.matrix(DT[,3:4]))
+hat_matrix = X%*%solve(t(X)%*%X)%*%t(X)
+
+sum = 0
+
+for(i in 1:25){
+  sum = sum + (res[i]/(1-hat_matrix[i,i]))^2
+}
+sum
+
+#--------- after deleting row
+mat = as.matrix(DT)
+NDT = mat[-9,]
+View(NDT)
+
+del_time = NDT[,2]
+no_cases = NDT[,3]
+dis = NDT[,4]
+NDT = as.data.frame(NDT)
+reg1 = lm(del_time~(no_cases+dis),data = NDT)
+summary(reg1)
+c1 = c(rep(1,24))
+NDT1 = as.matrix(NDT)
+Y = cbind(c1,NDT1[,3:4])
+res1 = reg1$residuals
+Hat = Y%*%solve(t(Y)%*%Y)%*%t(Y)
+
+sum1 = 0
+for(i in 1:24){
+  sum1 = sum1+ (reg$residuals[i]/(1-Hat[i,i]))^2
+}
+sum1
+
+plot(reg1)
+plot(reg1$fitted.values,reg1$residuals)
+n = length(del_time)
+MSres1 = sum(res1^2)/(n-3)
+d1 = res1/sqrt(MSres1)
+plot(abs(d1))
+for(i in 1:length(d1)){
+  if(abs(d1[i])>2){
+    
+    print(d[i])
+  }
+}
+
