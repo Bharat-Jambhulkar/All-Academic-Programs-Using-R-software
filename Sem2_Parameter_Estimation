@@ -1,0 +1,67 @@
+library(boot)
+library(Matrix)
+d = frets
+View(d)
+#### MLE Estimates of mu hat ####
+X1bar = mean(d$l1) 
+X2bar = mean(d$b1)
+X3bar = mean(d$l2)
+X4bar = mean(d$b2)
+c(X1bar,X2bar,X3bar,X4bar)
+
+mat = matrix(,nrow=4,ncol =length(d$l1))
+mat[1,] = d$l1-X1bar
+mat[2,] = d$b1-X2bar
+mat[3,] = d$l2-X3bar
+mat[4,] = d$b2-X4bar
+mat
+
+sum = matrix(c(rep(0,16)),nrow = 4,ncol=4)
+
+for(i in 1:25){
+  sum = sum + mat[,i]%*%t(mat[,i])
+}
+#MLE Estimate of Dispersion matrix
+est1 = sum/25
+
+
+
+#### Iris Data Set Que ####
+id = iris
+View(id)
+
+Y1 = mean(id$Sepal.Length)
+Y2 = mean(id$Sepal.Width)
+Y3 = mean(id$Petal.Length)
+Y4 = mean(id$Petal.Width)
+
+est2 = cov(id[,1:4])
+c(Y1,Y2,Y3,Y4)
+
+#### Q.3 ####
+#b)
+eigen(est1)$values
+eigen(est2)$values
+
+#a)
+for(i in 2:4){
+print(det(est1[1:i,1:i]))
+}
+
+for(i in 2:4){
+  print(det(est2[1:i,1:i]))
+}
+
+#### Q.4 ####
+
+dest1 = sqrt(diag(c(est1[1,1],est1[2,2],est1[3,3],est1[4,4])))
+r = solve(dest1)%*%est1%*%solve(dest1) #method b
+r
+cor = matrix(,nrow = 4,ncol=4) #method a
+for(i in 1:4){
+  for(j in 1:4){
+    cor[i,j] = est1[i,j]/sqrt(est1[i,i]*est1[j,j])
+  }
+}
+
+cov2cor(est1) #method c
