@@ -1,0 +1,86 @@
+m = 100
+n = seq(20,500)
+T = c()
+Tn = c()
+bias = c()
+lambda = 2
+MSE = c()
+ep = c(0.1,0.01,0.05)
+count = 0
+p = c()
+#a)
+#### Exponential Distribution ####
+for(i in 1:length(n)){
+  for(j in 1:m){
+    smpl = rpois(n[i],lambda)
+    T[j] = mean(smpl)
+    
+    if(abs(T[j]-lambda)<0.1){
+      count = count + 1
+    }
+    p[i] = count/m
+    MSE[i] = mean((T-lambda)^2)
+  }
+  Tn[i] = mean(T)
+  bias[i] = (Tn[i]-lambda)
+  
+  count = 0
+}
+
+plot(n,bias,type = 'l',main = "Bias Plot")
+plot(n,MSE,type = 'l',main = "MSE Plot")
+plot(n,p,type = 'l',main = "Coverage Probability Plot")
+
+###########################
+#Normal Distribution 
+
+theta = 0.12
+for(i in 1:length(n)){
+  for(j in 1:m){
+    smpl = rnorm(n[i],theta,1)
+    T[j] = max(0,mean(smpl))
+   
+    if(abs(T[j]-theta)<0.1){
+      count = count + 1
+    }
+    p[i] = count/m
+    MSE[i] = mean((T-theta)^2)
+  }
+  Tn[i] = mean(T)
+  bias[i] = (Tn[i]-theta)
+  
+  count = 0
+}
+
+plot(n,bias,type = 'l',main = "Bias Plot")
+plot(n,MSE,type = 'l',main = "MSE Plot")
+plot(n,p,type = 'l',main = "Coverage Probability Plot")
+
+#######################3
+
+# Uniform distribution
+
+theta = 19.3
+for(i in 1:length(n)){
+  for(j in 1:m){
+    smpl = runif(n[i],theta-1,theta+1)
+    T[j] = max(smpl) - 1
+    #T[j] = min(smpl) + 1
+    #T[j] = mean(smpl)
+    
+    if(abs(T[j]-theta)<0.1){
+      count = count + 1
+    }
+    p[i] = count/m
+    MSE[i] = mean((T-theta)^2)
+  }
+  Tn[i] = mean(T)
+  bias[i] = (Tn[i]-theta)
+  
+  count = 0
+}
+
+plot(n,bias,type = 'l',main = "Bias Plot")
+plot(n,MSE,type = 'l',main = "MSE Plot")
+plot(n,p,type = 'l',main = "Coverage Probability Plot")
+
