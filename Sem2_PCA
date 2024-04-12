@@ -1,0 +1,25 @@
+library(readxl)
+#### Que. 1 ####
+data = read_excel("swissbank.xlsx")
+
+p = princomp(data,scores = TRUE,cor = FALSE)
+
+plot(p,type = 'l')
+
+x=p$scores[,1]
+y = p$scores[,2]
+
+plot(x,y,col=rep(1:2,each=100),pch=rep(17:18,each=100),xlab='PC1',ylab='PC2')
+legend('topright',legend = c("Genuine","Forged"),col=1:2,pch=17:18)
+
+#f part
+newx1 = data[,1]/10
+newx2 = data[,2]/10
+newx3 = data[,3]/10
+newx6 = data[,6]/10
+newdata = cbind(newx1,newx2,newx3,data[,4],data[,5],newx6)
+
+
+pca.newdata = princomp(newdata,scores = TRUE,cor = FALSE)
+pca.newdata$loadings
+plot(pca.newdata$scores[,1],pca.newdata$scores[,2])
